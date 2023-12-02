@@ -1,0 +1,71 @@
+version: '3'
+
+networks:
+  praybot_net:
+
+services:
+  praybot-php-fpm:
+    build:
+        context: ./php
+    container_name: praybot-fpm
+    environment:
+      XDEBUG_CONFIG: "remote_host=host.docker.internal xdebug.remote_enable=1"
+      PHP_IDE_CONFIG: "serverName=Docker"
+    volumes:
+      - ../.././:/var/www/html
+    depends_on:
+      - praybot-postgres
+      - praybot-redis
+    networks:
+      - praybot_net
+
+  praybot-nginx:
+    build:
+        context: ./nginx
+    container_name: praybot-nginx
+    env_file:
+      - .env
+    depends_on:
+      - praybot-php-fpm
+    ports:
+      - 80:80
+    volumes:
+      - ../.././:/var/www/html
+    networks:
+      - praybot_net
+
+  praybot-postgres:
+    image: postgres:16.0
+    container_name: praybot-postgres
+    env_file:
+      - .env
+    ports:
+      - 5438:5432
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    networks:
+      - praybot_net
+
+  praybot-redis:
+    image: "redis:alpine"
+    container_name: praybot-redis
+    ports:
+      - 6379:6378
+    volumes:
+      - ./redis_data:/data
+    networks:
+      - praybot_net
+
+  praybot_pgbouncer:
+    image: "pgbouncer/pgbouncer:1.15.0"
+    container_name: praybot_pgbouncer
+    env_file:
+      - .env
+    depends_on:
+      - praybot-postgres
+    ports:
+      - "6432:6432"
+    networks:
+      - praybot_net
+
+
