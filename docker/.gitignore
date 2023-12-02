@@ -1,0 +1,4 @@
+./dev/.env
+**/db_data
+*.sh
+**/redis_data
