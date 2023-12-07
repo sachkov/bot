@@ -8,4 +8,6 @@ RUN addgroup --gid ${GROUP_ID} user
 
 RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
 
+RUN usermod -a -G www-data user
+
 USER user

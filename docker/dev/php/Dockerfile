@@ -49,6 +49,8 @@ RUN chown -R www-data:www-data /var/www/html
 
 RUN chmod -R 775 /var/www/html
 
+RUN usermod -a -G www-data user
+
 USER user
 
 EXPOSE 9000
