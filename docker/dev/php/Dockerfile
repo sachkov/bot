@@ -39,7 +39,15 @@ RUN addgroup --gid ${GROUP_ID} user
 
 RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
 
-RUN usermod -G www-data user
+RUN usermod -a -G www-data user
+
+RUN chown www-data: /var/www
+
+RUN chmod 755 /var/www/
+
+RUN chown -R www-data:www-data /var/www/html
+
+RUN chmod -R 775 /var/www/html
 
 USER user
 

@@ -31,6 +31,7 @@ services:
       - 80:80
     volumes:
       - ../.././:/var/www/html
+      - ../../logs/:/var/log/nginx
     networks:
       - praybot_net
 
