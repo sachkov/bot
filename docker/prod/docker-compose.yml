@@ -29,6 +29,7 @@ services:
       - praybot-php-fpm
     ports:
       - 80:80
+      - 443:443
     volumes:
       - ../.././:/var/www/html
       - ../../logs/:/var/log/nginx
@@ -36,15 +37,15 @@ services:
     networks:
       - praybot_net
 
-  certbot:
-    image: certbot/certbot
-    depends_on:
-      - praybot-nginx
-    container_name: certbot
-    volumes:
-      - ./etc-letsencrypt:/etc/letsencrypt
-      - ../.././:/var/www/html
-    command: certonly --webroot --webroot-path /var/www/html/public -d yuri-s.site --email chinateplo@gmail.com --agree-tos --no-eff-email --staging
+  #certbot:
+  #  image: certbot/certbot
+  #  depends_on:
+  #    - praybot-nginx
+  #  container_name: certbot
+  #  volumes:
+  #    - ./etc-letsencrypt:/etc/letsencrypt
+  #    - ../.././:/var/www/html
+  #  command: certonly --webroot --webroot-path /var/www/html/public -d yuri-s.site --email chinateplo@gmail.com --agree-tos --no-eff-email --staging
 
   praybot-postgres:
     image: postgres:16.0
