@@ -32,7 +32,7 @@ services:
     volumes:
       - ../.././:/var/www/html
       - ../../logs/:/var/log/nginx
-      - etc-letsencrypt:/etc/letsencrypt
+      - ./etc-letsencrypt:/etc/letsencrypt
     networks:
       - praybot_net
 
@@ -42,7 +42,7 @@ services:
       - praybot-nginx
     container_name: certbot
     volumes:
-      - etc-letsencrypt:/etc/letsencrypt
+      - ./etc-letsencrypt:/etc/letsencrypt
       - ../.././:/var/www/html
     command: certonly --webroot -w /var/www/html/public -d www.yuri-s.site --email chinateplo@gmail.com --agree-tos --no-eff-email --staging
 
