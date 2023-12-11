@@ -45,7 +45,7 @@ services:
     volumes:
       - ./etc-letsencrypt:/etc/letsencrypt
       - ../.././:/var/www/html
-    command: certonly --force-renew --webroot --webroot-path /var/www/html/public -d yuri-s.site -d www.yuri-s.site --email chinateplo@gmail.com --agree-tos --no-eff-email
+    command: certonly --force-renew --webroot --webroot-path /var/www/html/public -d yuri-s.site --email chinateplo@gmail.com --agree-tos --no-eff-email
 
   praybot-postgres:
     image: postgres:16.0
