@@ -2,6 +2,7 @@
 
 namespace App\Library\TelegramCommands;
 
+use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Commands\Command;
 
 class StartCommand extends Command
@@ -11,24 +12,31 @@ class StartCommand extends Command
 
     public function handle()
     {
-        $button = [
-            "text" => "JOIN",
-            "login_url" => [
-                "url" => config('app.frontend_url') . config('telegram.bots.mybot.redirect_path'),
-                "request_write_access" => true,
-            ]
-        ];
-        $keyboard = [
-            [$button],
-        ];
+//        $button = [
+//            "text" => "JOIN",
+//            "login_url" => [
+//                "url" => config('app.frontend_url') . config('telegram.bots.mybot.redirect_path'),
+//                "request_write_access" => true,
+//            ]
+//        ];
+//        $keyboard = [
+//            [$button],
+//        ];
+//
+//        $reply_markup = [
+//            "inline_keyboard" => $keyboard
+//        ];
 
-        $reply_markup = [
-            "inline_keyboard" => $keyboard
-        ];
+        Log::debug('telegram command',
+            [
+                'updateObj'=>$this->getUpdate(),
+                'MessageObj'=>$this->getUpdate()->getMessage()
+            ]
+        );
+
 
         $this->replyWithMessage([
-            'text' => 'New cool app for IT Professionals!',
-            'reply_markup' => json_encode($reply_markup)
+            'text' => 'I got it!',
         ]);
     }
 }
