@@ -1,4 +1,7 @@
 ./dev/.env
+./prod/.env
 **/db_data
 *.sh
 **/redis_data
+**/etc-letsencrypt
+
