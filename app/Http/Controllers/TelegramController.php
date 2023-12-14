@@ -13,7 +13,7 @@ class TelegramController extends Controller
     {
         Log::debug('Tel controller1');
         $update = Telegram::commandsHandler(true);
-        Log::debug('Tel controller2', [$update->getMessage(), print_r($update, true)]);
+        Log::debug('Tel controller2', [$update->getMessage(), $update->hasCommand()]);
 
         return response()->json(true, ResponseAlias::HTTP_OK);
     }
