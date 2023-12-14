@@ -11,8 +11,9 @@ class TelegramController extends Controller
 {
     public function update(Request $request)
     {
-        Log::debug('Tel controller', [$request->all()]);
-        Telegram::commandsHandler(true);
+        Log::debug('Tel controller1');
+        $update = Telegram::commandsHandler(true);
+        Log::debug('Tel controller2', [$update->getMessage(), print_r($update, true)]);
 
         return response()->json(true, ResponseAlias::HTTP_OK);
     }
