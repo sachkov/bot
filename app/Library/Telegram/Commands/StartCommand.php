@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Library\TelegramCommands;
+namespace App\Library\Telegram\Commands;
 
 use Illuminate\Support\Facades\Log;
 use Telegram\Bot\Commands\Command;

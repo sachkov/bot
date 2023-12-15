@@ -168,6 +168,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        App\Providers\LastCommandServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -183,6 +185,9 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+
+        'TelegramService' => \App\Facades\Telegram\TelegramServiceFacade::class,
+        'PrayService' => \App\Facades\Pray\PrayServiceFacade::class,
     ])->toArray(),
 
 ];
