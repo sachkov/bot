@@ -188,6 +188,7 @@ return [
 
         'TelegramService' => \App\Facades\Telegram\TelegramServiceFacade::class,
         'PrayService' => \App\Facades\Pray\PrayServiceFacade::class,
+        'StateService' => \App\Facades\StateServiceFacade::class,
     ])->toArray(),
 
 ];

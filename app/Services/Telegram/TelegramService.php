@@ -3,8 +3,8 @@
 namespace App\Services\Telegram;
 
 use App\Contracts\Telegram\TelegramServiceContract;
-use App\Library\Enum\StateEnum;
 use App\Models\User;
+use App\Services\StateService;
 use Telegram\Bot\Objects\Update;
 
 class TelegramService implements TelegramServiceContract
@@ -19,9 +19,9 @@ class TelegramService implements TelegramServiceContract
 
         $user = $this->getUser($update);
 
-        $question = $user->state()?->name ?? StateEnum::DEFAULT->value;
+        $state = StateService::getById($update->message->from->id);
 
-        $botResponse = app($question);
+        $botResponse = app($state);
 
         $botResponse->handle($update, $user);
     }

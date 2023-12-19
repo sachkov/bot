@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('states', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('telegram_id');
-            $table->string('class', 255);
+            $table->string('class', 255)->nullable();
 
             $table->timestamps();
 

@@ -12,15 +12,18 @@ class StartCommand extends Command
 
     public function handle()
     {
-        $keyboard = (new ReplyKeyboardMarkup([['Add', 'Settings']]))->setPersistent(true);
+        $user = \TelegramService::getUser($this->getUpdate());
+
+        $keyboard = (new ReplyKeyboardMarkup([['/Add', '/List', '/Edit', '/Settings']]))->setPersistent(true);
         $res = [
             'text' => '
-                Добро пожаловать.
+                Добро пожаловать ' . $user->name . '.
                 Я помогаю сохранить и упорядочевать ваши молитвы, делится ими с друзьями и многое другое.
                 Создавайте новые молитвы просто написав об этом в чат и просматривайте когда будет необходимо.
             ',
+            'reply_markup'  => $keyboard->toArray(),
         ];
 
-        $this->replyWithMessage(array_merge($res, $keyboard->toArray()));
+        $this->replyWithMessage($res);
     }
 }

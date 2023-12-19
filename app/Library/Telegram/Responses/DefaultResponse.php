@@ -2,6 +2,9 @@
 
 namespace App\Library\Telegram\Responses;
 
+use App\Library\Enum\StateEnum;
+use App\Library\Telegram\Keyboards\InlineKeyboardButton;
+use App\Library\Telegram\Keyboards\InlineKeyboardMarkup;
 use Illuminate\Contracts\Validation\ValidationRule;
 
 class DefaultResponse extends AbstractResponse
@@ -15,15 +18,32 @@ class DefaultResponse extends AbstractResponse
     {
         $result = \PrayService::quickAdd($this->text, $this->user);
 
-        $message = 'Your prayer was saved.';
         if (!$result) {
-            $message = 'Saving error. Please try later.';
+            $this->bot->sendMessage([
+                'chat_id' => $this->user->telegram_id,
+                'text' => 'Saving error. Please try later.',
+            ]);
+            return;
         }
 
-        $this->bot->sendMessage([
-            'chat_id' => $this->user->telegram_id,
-            'text' => $message,
+        $message = 'Молитва сохранена. По умолчанию она будет активна в течении ';
+        $message .= config('params.default.pray_length') .' дней. ';
+        $message .= 'Вы можете выбрать время действия молитвы или написать точное количествово дней ';
+        $message .= 'или дату окончания молитвы.';
+
+        $keyboard = new InlineKeyboardMarkup([
+            new InlineKeyboardButton('1', 'period_7'),
+            new InlineKeyboardButton('7', 'period_14'),
+            new InlineKeyboardButton('30', 'period_30'),
         ]);
+
+        $this->bot->sendMessage([
+            'chat_id'       => $this->user->telegram_id,
+            'text'          => $message,
+            'reply_markup'  => $keyboard->toArray(),
+        ]);
+
+        \StateService::set(StateEnum::ADD_PRAY_TIME, $this->user);
     }
 
     protected function getValidationMessage(): ?string

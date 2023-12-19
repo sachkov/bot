@@ -61,7 +61,7 @@ class ReplyKeyboardMarkup implements Arrayable
 
     public function toArray(): array
     {
-        $res = ['reply_markup' => $this->keyboard];
+        $res = ['keyboard' => $this->keyboard];
 
         if (isset($this->is_persistent)) {
             $res['is_persistent'] = $this->is_persistent;

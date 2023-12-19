@@ -9,6 +9,14 @@ class User extends Model
 {
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    public function getNameAttribute()
+    {
+        if ($this->first_name && $this->second_name) {
+            return $this->first_name . ', ' . $this->second_name;
+        }
+        return $this->first_name ?: $this->second_name;
+    }
+
     public function state(): BelongsTo
     {
         return $this->BelongsTo(State::class);
