@@ -3,8 +3,9 @@
 namespace App\Library\Telegram\Keyboards;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 
-class InlineKeyboardMarkup implements Arrayable
+class InlineKeyboardMarkup implements Arrayable, Jsonable
 {
     public function __construct(array $button_lines)
     {
@@ -20,5 +21,10 @@ class InlineKeyboardMarkup implements Arrayable
     public function toArray()
     {
         return ['inline_keyboard' => $this->keyboard];
+    }
+
+    public function toJson($options = 0)
+    {
+        return json_encode($this->toArray());
     }
 }

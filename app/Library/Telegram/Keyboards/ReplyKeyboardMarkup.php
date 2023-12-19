@@ -3,8 +3,9 @@
 namespace App\Library\Telegram\Keyboards;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 
-class ReplyKeyboardMarkup implements Arrayable
+class ReplyKeyboardMarkup implements Arrayable, Jsonable
 {
     private array $keyboard;
     private bool $is_persistent;
@@ -84,5 +85,10 @@ class ReplyKeyboardMarkup implements Arrayable
         }
 
         return $res;
+    }
+
+    public function toJson($options = 0)
+    {
+        return json_encode($this->toArray());
     }
 }

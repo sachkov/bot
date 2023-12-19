@@ -14,14 +14,17 @@ class StartCommand extends Command
     {
         $user = \TelegramService::getUser($this->getUpdate());
 
-        $keyboard = (new ReplyKeyboardMarkup([['/Add', '/List', '/Edit', '/Settings']]))->setPersistent(true);
+        $keyboard = (new ReplyKeyboardMarkup([['/Add', '/List', '/Edit', '/Settings']]))
+            ->setPersistent(true)
+            ->setResize(true);
+
+        $message = 'Добро пожаловать ' . $user->name . '.' . PHP_EOL . 'Я помогаю сохранить ';
+        $message .= 'и упорядочевать ваши молитвы, делится ими с друзьями и многое другое. ';
+        $message .= 'Создавайте новые молитвы просто написав сообщение в чат и просматривайте когда удобно.';
+
         $res = [
-            'text' => '
-                Добро пожаловать ' . $user->name . '.
-                Я помогаю сохранить и упорядочевать ваши молитвы, делится ими с друзьями и многое другое.
-                Создавайте новые молитвы просто написав об этом в чат и просматривайте когда будет необходимо.
-            ',
-            'reply_markup'  => $keyboard->toArray(),
+            'text' => $message,
+            'reply_markup'  => $keyboard->toJson(),
         ];
 
         $this->replyWithMessage($res);
