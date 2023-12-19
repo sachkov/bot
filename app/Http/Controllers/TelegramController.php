@@ -14,7 +14,6 @@ class TelegramController extends Controller
     {
         Log::debug('Tel controller1');
         $update = Telegram::commandsHandler(true);
-        Log::debug('Tel controller2', [$update->getMessage(), $update->getMessage()->hasCommand()]);
 
         TelegramService::respond($update);
 

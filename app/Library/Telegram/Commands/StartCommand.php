@@ -2,41 +2,25 @@
 
 namespace App\Library\Telegram\Commands;
 
-use Illuminate\Support\Facades\Log;
+use App\Library\Telegram\Keyboards\ReplyKeyboardMarkup;
 use Telegram\Bot\Commands\Command;
 
 class StartCommand extends Command
 {
     protected string $name = 'start';
-    protected string $description = 'Login in IDPRO app';
+    protected string $description = 'Login in Pray bot';
 
     public function handle()
     {
-//        $button = [
-//            "text" => "JOIN",
-//            "login_url" => [
-//                "url" => config('app.frontend_url') . config('telegram.bots.mybot.redirect_path'),
-//                "request_write_access" => true,
-//            ]
-//        ];
-//        $keyboard = [
-//            [$button],
-//        ];
-//
-//        $reply_markup = [
-//            "inline_keyboard" => $keyboard
-//        ];
+        $keyboard = (new ReplyKeyboardMarkup([['Add', 'Settings']]))->setPersistent(true);
+        $res = [
+            'text' => '
+                Добро пожаловать.
+                Я помогаю сохранить и упорядочевать ваши молитвы, делится ими с друзьями и многое другое.
+                Создавайте новые молитвы просто написав об этом в чат и просматривайте когда будет необходимо.
+            ',
+        ];
 
-        Log::debug('telegram command',
-            [
-                'updateObj'=>$this->getUpdate(),
-                'MessageObj'=>$this->getUpdate()->getMessage()
-            ]
-        );
-
-
-        $this->replyWithMessage([
-            'text' => 'I got it!',
-        ]);
+        $this->replyWithMessage(array_merge($res, $keyboard->toArray()));
     }
 }

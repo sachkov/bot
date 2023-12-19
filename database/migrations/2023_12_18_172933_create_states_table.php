@@ -11,18 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('prays', function (Blueprint $table) {
+        Schema::create('states', function (Blueprint $table) {
             $table->id();
-
-            $table->bigInteger('author_id');
-            $table->string('description', 255);
-            $table->integer('showed');
-            $table->date('end_date');
+            $table->bigInteger('telegram_id');
+            $table->string('class', 255);
 
             $table->timestamps();
 
-            $table->foreign('author_id')
-                ->references('id')
+            $table->foreign('telegram_id')
+                ->references('telegram_id')
                 ->on('users')
                 ->onDelete('restrict');
         });
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('prays');
+        Schema::dropIfExists('states');
     }
 };

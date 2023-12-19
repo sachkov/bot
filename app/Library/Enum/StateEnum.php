@@ -2,9 +2,9 @@
 
 namespace App\Library\Enum;
 
-enum LastQuestionEnum: string
+enum StateEnum: string
 {
-    case ADD_PRAY           = 'addPray';
+    case DEFAULT            = 'addPray';
     case ADD_PRAY_DESCR     = 'addPrayDescr';
     case ADD_PRAY_TIME      = 'addPrayLength';
 }

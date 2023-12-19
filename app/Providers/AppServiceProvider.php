@@ -24,6 +24,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->app->bind(TelegramServiceContract::class, TelegramService::class);
-        $this->app->bind(PrayService::class, PrayServiceContract::class);
+        $this->app->bind(PrayServiceContract::class, PrayService::class);
     }
 }
