@@ -12,7 +12,7 @@ class TelegramService implements TelegramServiceContract
     {
         $type = $update->objectType();
         \Log::debug('telegramservice respond', [$type, $update]);
-        if ($update->getMessage()->hasCommand()) {
+        if ($update->getMessage()->hasCommand() || $type == 'callback_query') {
             return;
         }
 
