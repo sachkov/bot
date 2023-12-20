@@ -7,6 +7,8 @@ use Illuminate\Contracts\Support\Jsonable;
 
 class InlineKeyboardMarkup implements Arrayable, Jsonable
 {
+    private array $keyboard;
+
     public function __construct(array $button_lines)
     {
         foreach ($button_lines as $buttons){
