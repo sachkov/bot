@@ -19,6 +19,6 @@ class User extends Model
 
     public function state(): BelongsTo
     {
-        return $this->BelongsTo(State::class);
+        return $this->BelongsTo(State::class, 'telegram_id', 'telegram_id');
     }
 }

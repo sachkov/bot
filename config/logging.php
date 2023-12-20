@@ -73,7 +73,9 @@ return [
             'formatter' => JsonFormatter::class,
             'handler_with' => [
                 'filename' => storage_path('logs/laravel.log'),
-                'filePermission' => 0664
+                'filePermission' => 0664,
+                'filenameFormat' => '{date}-{filename}',
+                'dateFormat' => 'Y-m',
             ],
         ],
 
