@@ -169,7 +169,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        App\Providers\LastCommandServiceProvider::class,
+        App\Providers\TelegramResponseProvider::class,
     ])->toArray(),
 
     /*

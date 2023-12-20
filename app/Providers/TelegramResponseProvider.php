@@ -6,7 +6,7 @@ use App\Library\Enum\StateEnum;
 use App\Library\Telegram\Responses\DefaultResponse;
 use Illuminate\Support\ServiceProvider;
 
-class LastCommandServiceProvider extends ServiceProvider
+class TelegramResponseProvider extends ServiceProvider
 {
     public function register()
     {

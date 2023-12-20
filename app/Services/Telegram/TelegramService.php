@@ -4,7 +4,6 @@ namespace App\Services\Telegram;
 
 use App\Contracts\Telegram\TelegramServiceContract;
 use App\Models\User;
-use App\Services\StateService;
 use Telegram\Bot\Objects\Update;
 
 class TelegramService implements TelegramServiceContract
@@ -19,7 +18,7 @@ class TelegramService implements TelegramServiceContract
 
         $user = $this->getUser($update);
 
-        $state = StateService::getById($update->message->from->id);
+        $state = \StateService::getById($update->message->from->id);
 
         $botResponse = app($state);
 
