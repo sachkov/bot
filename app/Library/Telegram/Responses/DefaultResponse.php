@@ -31,11 +31,11 @@ class DefaultResponse extends AbstractResponse
         $message .= 'Вы можете выбрать время действия молитвы или написать точное количество дней ';
         $message .= 'или написать дату окончания молитвы.';
 
-        $keyboard = new InlineKeyboardMarkup([
+        $keyboard = new InlineKeyboardMarkup([[
             new InlineKeyboardButton('1', 'period_7'),
             new InlineKeyboardButton('7', 'period_14'),
             new InlineKeyboardButton('30', 'period_30'),
-        ]);
+        ]]);
 
         $this->bot->sendMessage([
             'chat_id'       => $this->user->telegram_id,

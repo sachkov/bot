@@ -6,7 +6,7 @@ use Illuminate\Contracts\Support\Arrayable;
 
 class InlineKeyboardButton implements Arrayable
 {
-    private string $url;
+    private ?string $url;
 
     public function __construct(private readonly string $text, private readonly string $callback_data='')
     {
