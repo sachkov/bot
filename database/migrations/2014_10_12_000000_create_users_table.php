@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('second_name');
             $table->string('email');
-            $table->bigInteger('telegram_id');
+            $table->bigInteger('telegram_id')->unique();
             $table->string('username')->unique();
             $table->timestamps();
         });
