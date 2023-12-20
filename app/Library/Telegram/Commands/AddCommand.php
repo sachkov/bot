@@ -22,6 +22,6 @@ class AddCommand extends Command
 
         $this->replyWithMessage($res);
 
-        \StateService::set(StateEnum::ADD_PRAY_DESCR, $user);
+        \StateService::set(StateEnum::DEFAULT, $user);
     }
 }
