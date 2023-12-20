@@ -17,7 +17,7 @@ class StateService implements StateServiceContract
 
     public function set(StateEnum $state_label, User $user): void
     {
-        $state = $user->state()->get();
+        $state = $user->state()->first();
 
         if (is_null($state)) {
             State::create([
@@ -33,7 +33,7 @@ class StateService implements StateServiceContract
 
     public function reset(User $user): void
     {
-        $state = $user->state()->get();
+        $state = $user->state()->first();
 
         if (is_null($state)) {
             return;
