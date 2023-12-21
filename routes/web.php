@@ -15,6 +15,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/health', function () {
-    //Log::debug('log test');
     return 'Ok';
 });

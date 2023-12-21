@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Library\Telegram\Responses\Pray;
+namespace App\Library\Telegram\Messages\Pray;
 
-use App\Library\Telegram\Responses\AbstractResponse;
+use App\Library\Telegram\Messages\AbstractMessageHandler;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class AddPrayLengthResponse extends AbstractResponse
+class AddPrayLengthMessageHandler extends AbstractMessageHandler
 {
     protected function rule(): string|array|ValidationRule
     {
         return [];
     }
 
-    protected function respond()
+    protected function handler()
     {
         \Log::debug('AddPrayLengthResponse');
     }

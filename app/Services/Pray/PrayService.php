@@ -21,14 +21,23 @@ class PrayService implements PrayServiceContract
         return $pray;
     }
 
-    public function changeLength(string $date, Pray $pray): Pray
+    public function setLength(Pray $pray, string $date): Pray
     {
         if (is_numeric($date)) {
-            $end = Carbon::parse($pray->end_date);
+            $end = Carbon::parse($pray->created_at);
             $pray->end_date = $end->addDays($date);
         } else {
             $pray->end_date = Carbon::parse($date);
         }
+        $pray->save();
+
+        return $pray;
+    }
+
+    public function increaseLength(Pray $pray, string $date): Pray
+    {
+        $end = Carbon::parse($pray->end_date);
+        $pray->end_date = $end->addDays($date);
         $pray->save();
 
         return $pray;
