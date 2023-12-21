@@ -2,22 +2,22 @@
 
 namespace App\Library\Telegram\Messages;
 
-use App\Models\User;
+use App\Contracts\Telegram\TelegramUpdateHandlerContract;
+use App\Models\State;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Support\Facades\Validator;
 use Telegram\Bot\Api;
-use Telegram\Bot\Laravel\Facades\Telegram;
 use Telegram\Bot\Objects\Update;
 
-abstract class AbstractMessageHandler
+abstract class AbstractMessageHandler implements TelegramUpdateHandlerContract
 {
-    protected User $user;
+    protected State $user;
     protected Api $bot;
     protected string $text;
 
-    public function respond(Update $update, User $user): void
+    public function respond(Update $update, State $state): void
     {
-        $this->user = $user;
+        $this->user = $state;
         $this->bot = app('telegram.bot');
         $this->text = $update->message->text;
 

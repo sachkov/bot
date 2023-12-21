@@ -15,5 +15,13 @@ class AddPrayLengthMessageHandler extends AbstractMessageHandler
     protected function handler()
     {
         \Log::debug('AddPrayLengthResponse');
+
+        $pray = \PrayService::setLength($pray, $data);
+
+        $this->bot->editMessageReplyMarkup([
+            'chat_id'       => $this->chat_id,
+            'message_id'    => $this->message_id,
+            'reply_markup'  => json_encode(['inline_keyboard' =>[]]),
+        ]);
     }
 }

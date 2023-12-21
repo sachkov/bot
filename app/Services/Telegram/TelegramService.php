@@ -3,7 +3,6 @@
 namespace App\Services\Telegram;
 
 use App\Contracts\Telegram\TelegramServiceContract;
-use App\Library\Enum\CallbackEnum;
 use App\Models\User;
 use Telegram\Bot\Objects\Update;
 
@@ -13,27 +12,13 @@ class TelegramService implements TelegramServiceContract
     {
 
         try {
-            $type = $update->objectType();
-            \Log::debug('telegramservice respond', [$type, $update]);
-            if ($update->getMessage()->hasCommand()) {
-                return;
-            }
+            \Log::debug('telegramservice respond', [$update->objectType(), $update]);
 
-            $handlerLabel = match ($type) {
-                'callback_query' => $this->getCallbackHandler($update),
-                'message' => \StateService::getById($update?->message?->from?->id ?? 0),
-                default => false,
-            };
+            $state = \StateService::getByUpdate($update);
 
-            if (!$handlerLabel) {
-                return;
-            }
+            $botResponse = app($state->handler);
 
-            $botResponse = app($handlerLabel);
-
-            $user = $this->getUser($update);
-
-            $botResponse->respond($update, $user);
+            $botResponse->respond($update, $state);
         }catch (\Exception $e) {
             \Log::debug('telegramservice exception', [$e->getMessage()]);
         }
@@ -55,18 +40,5 @@ class TelegramService implements TelegramServiceContract
         }
 
         return $user;
-    }
-
-    private function getCallbackHandler($update): string
-    {
-        $data = $update->callback_query?->data;
-
-        if (!isset($data)) {
-            return CallbackEnum::DEFAULT->value;
-        }
-
-        $label = explode(config('params.callback.handler_separator'), $data);
-
-        return $label[0];
     }
 }

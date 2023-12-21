@@ -3,10 +3,15 @@
 namespace App\Contracts;
 
 use App\Library\Enum\StateEnum;
+use App\Models\State;
 use App\Models\User;
+use Telegram\Bot\Objects\Update;
 
 interface StateServiceContract
 {
-    public function getById(int $telegram_id): string;
-    public function set(StateEnum $state_label, User $user): void;
+    public function getByTelegramId(int $telegram_id): State;
+    public function getByUpdate(Update $update): ?State;
+    public function set(StateEnum $handler, User $user): void;
+    public function reset(User $user): void;
+    public function getCallbackState($update): State;
 }
