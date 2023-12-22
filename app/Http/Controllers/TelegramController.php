@@ -12,7 +12,6 @@ class TelegramController extends Controller
 {
     public function update(Request $request)
     {
-        Log::debug('Tel controller1');
         $update = Telegram::commandsHandler(true);
 
         TelegramService::respond($update);
