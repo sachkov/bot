@@ -2,7 +2,6 @@
 
 namespace App\Library\Telegram\Keyboards;
 
-use App\Library\Enum\CallbackEnum;
 use Illuminate\Contracts\Support\Arrayable;
 
 class InlineKeyboardButton implements Arrayable
@@ -30,7 +29,7 @@ class InlineKeyboardButton implements Arrayable
         }
 
         if ($this->callback_data) {
-            $res['callback_data'] = json_encode($this->callback_data);
+            $res['callback_data'] = http_build_query($this->callback_data);
         }
 
         return $res;

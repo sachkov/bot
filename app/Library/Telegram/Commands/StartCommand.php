@@ -2,6 +2,7 @@
 
 namespace App\Library\Telegram\Commands;
 
+use App\Library\Enum\StateEnum;
 use App\Library\Telegram\Keyboards\ReplyKeyboardMarkup;
 use Telegram\Bot\Commands\Command;
 
@@ -27,6 +28,8 @@ class StartCommand extends Command
             'reply_markup'  => $keyboard->toJson(),
         ];
 
-        $this->replyWithMessage($res);
+        $message = $this->replyWithMessage($res);
+
+        \StateService::set(StateEnum::DEFAULT, $user, ['message_id' => $message?->messageId]);
     }
 }

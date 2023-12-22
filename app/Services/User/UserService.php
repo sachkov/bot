@@ -21,6 +21,12 @@ class UserService implements UserServiceContract
             'message' => $update->message->from,
         };
 
+        $user = $this->getByTelegramId($from->id);
+
+        if (!is_null($user)) {
+            return $user;
+        }
+
         return User::create([
             'first_name'    => $from->firstName,
             'second_name'   => $from->lastName,

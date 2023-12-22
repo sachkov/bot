@@ -16,10 +16,7 @@ class StateService implements StateServiceContract
         $state = State::where('telegram_id', $telegram_id)->first();
 
         if (is_null($state)) {
-            $state = new State;
-            $state->handler = $data->handler ?? StateEnum::DEFAULT->value;
-            $state->telegram_id = $telegram_id;
-            $state->data = [];
+            $state = $this->getEmptyMessageState($telegram_id);
         }
         return $state;
     }
@@ -34,7 +31,7 @@ class StateService implements StateServiceContract
         return match ($type) {
             'callback_query' => $this->getCallbackState($update),
             'message' => $this->getByTelegramId($update?->message?->from?->id ?? 0),
-            default => null,
+            default => $this->getEmptyMessageState(),
         };
     }
 
@@ -71,13 +68,23 @@ class StateService implements StateServiceContract
 
     public function getCallbackState($update): State
     {
-        $data = $update->callback_query->data;
+        parse_str($update->callback_query->data, $data);
 
         $state = new State;
-        $state->handler = $data->handler ?? CallbackEnum::DEFAULT->value;
+        $state->handler = $data['h'] ?? CallbackEnum::DEFAULT->value;
         $state->telegram_id = $update->callback_query->from->id;
+        unset($data['h']);
         $state->data = $data->data ?? [];
 
+        return $state;
+    }
+
+    public function getEmptyMessageState(int $telegram_id = 0): State
+    {
+        $state = new State;
+        $state->handler = StateEnum::DEFAULT->value;
+        $state->telegram_id = $telegram_id;
+        $state->data = [];
         return $state;
     }
 }

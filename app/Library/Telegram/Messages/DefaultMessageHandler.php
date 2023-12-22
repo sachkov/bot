@@ -61,11 +61,9 @@ class DefaultMessageHandler extends AbstractMessageHandler
     protected function makeCallbackData(int $period, int $pray_id): array
     {
         return [
-            'handler' => CallbackEnum::ADD_PRAY_LENGTH->value,
-            'data' => [
-                'period_days' => $period,
-                'pray_id' => $pray_id,
-            ],
+            'h' => CallbackEnum::ADD_PRAY_LENGTH->value,
+            'period_days' => $period,
+            'pray_id' => $pray_id,
         ];
     }
 }

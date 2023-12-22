@@ -14,11 +14,15 @@ class TelegramService implements TelegramServiceContract
 
             $state = \StateService::getByUpdate($update);
 
+            if (is_null($state)) {
+                return;
+            }
+
             $botResponse = app($state->handler);
 
             $botResponse->respond($update, $state);
         }catch (\Exception $e) {
-            \Log::debug('telegramservice exception', [$e->getMessage()]);
+            \Log::debug('telegramservice exception', [$e->getMessage() . $e->getFile() . ':' . $e->getLine()]);
         }
     }
 }
