@@ -11,8 +11,7 @@ class InlineKeyboardButton implements Arrayable
 
     public function __construct(
         private readonly string $text,
-        private readonly CallbackEnum $handler = CallbackEnum::DEFAULT,
-        private readonly string|int $callback_data = ''
+        private readonly array $callback_data = []
     ) {
     }
 
@@ -31,8 +30,7 @@ class InlineKeyboardButton implements Arrayable
         }
 
         if ($this->callback_data) {
-            $res['callback_data'] = $this->handler->value . config('params.callback.handler_separator');
-            $res['callback_data'] .= $this->callback_data;
+            $res['callback_data'] = json_encode($this->callback_data);
         }
 
         return $res;

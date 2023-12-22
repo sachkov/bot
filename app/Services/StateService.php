@@ -38,7 +38,7 @@ class StateService implements StateServiceContract
         };
     }
 
-    public function set(StateEnum $handler, User $user): void
+    public function set(StateEnum $handler, User $user, array $data): void
     {
         $state = $user->state()->first();
 
@@ -46,11 +46,13 @@ class StateService implements StateServiceContract
             State::create([
                 'telegram_id' => $user->telegram_id,
                 'handler' => $handler->value,
+                'data' => $data,
             ]);
             return;
         }
 
         $state->handler = $handler->value;
+        $state->data = $data;
         $state->save();
     }
 

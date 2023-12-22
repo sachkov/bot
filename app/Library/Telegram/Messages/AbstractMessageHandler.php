@@ -11,13 +11,15 @@ use Telegram\Bot\Objects\Update;
 
 abstract class AbstractMessageHandler implements TelegramUpdateHandlerContract
 {
-    protected State $user;
+    protected Update $update;
+    protected State $state;
     protected Api $bot;
     protected string $text;
 
     public function respond(Update $update, State $state): void
     {
-        $this->user = $state;
+        $this->update = $update;
+        $this->state = $state;
         $this->bot = app('telegram.bot');
         $this->text = $update->message->text;
 
@@ -25,7 +27,7 @@ abstract class AbstractMessageHandler implements TelegramUpdateHandlerContract
 
         if ($validator->fails()) {
             $this->bot->sendMessage([
-                'chat_id' => $this->user->telegram_id,
+                'chat_id' => $this->state->telegram_id,
                 'text' => $this->getValidationMessage() ?? implode(', ', $validator->errors()->toArray()),
             ]);
             return;

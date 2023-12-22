@@ -4,7 +4,11 @@ namespace App\Library\Telegram\Callback;
 
 class DefaultCallbackHandler extends AbstractCallbackHandler
 {
-
+    /**
+     * A handler for an emergency situation when it is unclear which callback came.
+     * @return void
+     * @throws \Telegram\Bot\Exceptions\TelegramSDKException
+     */
     protected function handler()
     {
         if (!is_null($this->callback_id)) {
@@ -21,9 +25,5 @@ class DefaultCallbackHandler extends AbstractCallbackHandler
                 'reply_markup'  => json_encode(['inline_keyboard' =>[]]),
             ]);
         }
-
-        //$this->bot->answerCallbackQuery([]);
-        //$this->bot->editMessageText([]);
-        //$this->bot->editMessageReplyMarkup([]);
     }
 }
