@@ -20,7 +20,9 @@ class AddPrayLengthCallbackHandler extends AbstractCallbackHandler
             'text'              => 'Сохранено. Молитва активна до ' . $pray->end_date,
         ]);
 
-        \Log::debug('AddPrayLengthCallbackHandler', [$this]);
+        \Log::debug('AddPrayLengthCallbackHandler update', [$this->update]);
+        \Log::debug('AddPrayLengthCallbackHandler message_id', [$this->message_id]);
+        \Log::debug('AddPrayLengthCallbackHandler $this->chat_id', [$this->chat_id]);
         if (!is_null($this->chat_id)) {
             $user = \UserService::getByTelegramId((int)$this->chat_id);
             \StateService::reset($user);
