@@ -74,7 +74,7 @@ class StateService implements StateServiceContract
         $state->handler = $data['h'] ?? CallbackEnum::DEFAULT->value;
         $state->telegram_id = $update->callback_query->from->id;
         unset($data['h']);
-        $state->data = $data->data ?? [];
+        $state->data = $data ?? [];
 
         return $state;
     }
