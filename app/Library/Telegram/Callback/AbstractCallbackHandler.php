@@ -23,7 +23,7 @@ abstract class AbstractCallbackHandler implements TelegramUpdateHandlerContract
         $this->bot = app('telegram.bot');
 
         $this->message_id = $update->callback_query?->message->message_id;
-        $this->chat_id = $update->callback_query?->chat?->id;
+        $this->chat_id = $update->callback_query?->message->chat->id;
         $this->callback_id = $update->callback_query?->id;
 
         $this->handler();
