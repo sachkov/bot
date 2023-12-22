@@ -9,10 +9,11 @@ class AddPrayLengthCallbackHandler extends AbstractCallbackHandler
 {
     protected function handler()
     {
-        $data = explode(config('params.callback.data_separator'), $this->data);
-        $pray = Pray::find($data[0]);
+        $data = $this->state->data;
+        \Log::debug('AddPrayLengthCallbackHandler data debug', [$data]);
+        $pray = Pray::find($data['pray_id']);
 
-        $pray = \PrayService::setLength($pray, $data);
+        $pray = \PrayService::setLength($pray, $data['period_days']);
 
         $this->bot->answerCallbackQuery([
             'callback_query_id' => $this->callback_id,

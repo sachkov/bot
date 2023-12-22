@@ -13,7 +13,6 @@ abstract class AbstractCallbackHandler implements TelegramUpdateHandlerContract
     protected State $state;
     protected Api $bot;
     protected ?int $message_id;
-    protected ?string $data;
     protected ?int $chat_id;
     protected ?int $callback_id;
 
