@@ -10,7 +10,7 @@ class AddPrayLengthCallbackHandler extends AbstractCallbackHandler
     protected function handler()
     {
         $data = $this->state->data;
-        \Log::debug('AddPrayLengthCallbackHandler data debug', [$data]);
+
         $pray = Pray::find($data['pray_id']);
 
         $pray = \PrayService::setLength($pray, $data['period_days']);
@@ -20,10 +20,13 @@ class AddPrayLengthCallbackHandler extends AbstractCallbackHandler
             'text'              => 'Сохранено. Молитва активна до ' . $pray->end_date,
         ]);
 
-//        $this->bot->editMessageReplyMarkup([
-//            'chat_id'       => $this->chat_id,
-//            'message_id'    => $this->message_id,
-//            'reply_markup'  => json_encode(['inline_keyboard' =>[]]),
-//        ]);
+        $this->bot->editMessageReplyMarkup([
+            'chat_id'       => $this->chat_id,
+            'message_id'    => $this->message_id,
+            'reply_markup'  => json_encode(['inline_keyboard' =>[]]),
+        ]);
+
+        $user = \UserService::getByTelegramId($this->chat_id);
+        \StateService::reset($user);
     }
 }
