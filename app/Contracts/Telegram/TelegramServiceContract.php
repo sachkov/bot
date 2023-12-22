@@ -7,5 +7,5 @@ use Telegram\Bot\Objects\Update;
 
 interface TelegramServiceContract
 {
-    public function getUser(Update $update): User;
+    public function respond(Update $update): void;
 }

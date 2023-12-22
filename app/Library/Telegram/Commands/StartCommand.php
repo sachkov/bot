@@ -12,7 +12,7 @@ class StartCommand extends Command
 
     public function handle()
     {
-        $user = \TelegramService::getUser($this->getUpdate());
+        $user = \UserService::getByUpdate($this->getUpdate());
 
         $keyboard = (new ReplyKeyboardMarkup([['/Add', '/List', '/Edit', '/Settings']]))
             ->setPersistent(true)

@@ -12,7 +12,7 @@ class AddCommand extends Command
 
     public function handle()
     {
-        $user = \TelegramService::getUser($this->getUpdate());
+        $user = \UserService::getByUpdate($this->getUpdate());
 
         $res = [
             'text' => '
@@ -20,8 +20,8 @@ class AddCommand extends Command
             ',
         ];
 
-        $this->replyWithMessage($res);
+        $message = $this->replyWithMessage($res);
 
-        \StateService::set(StateEnum::DEFAULT, $user);
+        \StateService::set(StateEnum::DEFAULT, $user, ['message_id' => $message?->messageId]);
     }
 }
