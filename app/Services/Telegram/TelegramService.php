@@ -10,13 +10,14 @@ class TelegramService implements TelegramServiceContract
     public function respond(Update $update): void
     {
         try {
-            \Log::debug('telegramservice respond', [$update->objectType(), $update]);
+            \Log::debug('RESPOND', [$update->objectType(), $update]);
 
             $state = \StateService::getByUpdate($update);
 
             if (is_null($state)) {
                 return;
             }
+            \Log::debug('RESPOND state', [$state]);
 
             $botResponse = app($state->handler);
 
