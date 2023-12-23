@@ -18,6 +18,8 @@ class StateService implements StateServiceContract
         if (is_null($state)) {
             $state = $this->getEmptyMessageState($telegram_id);
         }
+
+        $state->handler = $state->handler ?? StateEnum::DEFAULT->value;
         return $state;
     }
 
