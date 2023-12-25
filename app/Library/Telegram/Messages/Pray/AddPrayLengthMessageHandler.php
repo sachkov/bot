@@ -15,8 +15,6 @@ class AddPrayLengthMessageHandler extends AbstractMessageHandler
 
     protected function handler()
     {
-        \Log::debug('AddPrayLengthResponse');
-
         $user = \UserService::getByTelegramId($this->state->telegram_id);
 
         $pray = Pray::find($this->state->data['pray_id']);

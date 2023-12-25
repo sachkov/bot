@@ -11,4 +11,5 @@ interface PrayServiceContract
     public function setLength(Pray $pray, string $date): Pray;
     public function increaseLength(Pray $pray, string $date): Pray;
     public function quickAdd(string $text, User $user): Pray;
+    public function list(User $user, int $page=1): array;
 }

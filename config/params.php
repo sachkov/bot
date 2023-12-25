@@ -4,8 +4,8 @@ return [
     'default' => [
         'pray_length' => 7,
     ],
-    'callback' => [
-        'handler_separator' => '_',
-        'data_separator' => '-',
+    'list' => [
+        'limit' => 5,
+        'default_order' => 'created_at',
     ]
 ];

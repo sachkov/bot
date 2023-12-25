@@ -17,7 +17,6 @@ class TelegramService implements TelegramServiceContract
             if (is_null($state)) {
                 return;
             }
-            \Log::debug('RESPOND state', [$state]);
 
             $botResponse = app($state->handler);
 

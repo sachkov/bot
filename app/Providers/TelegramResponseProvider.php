@@ -6,6 +6,7 @@ use App\Library\Enum\CallbackEnum;
 use App\Library\Enum\StateEnum;
 use App\Library\Telegram\Callback\DefaultCallbackHandler;
 use App\Library\Telegram\Callback\Pray\AddPrayLengthCallbackHandler;
+use App\Library\Telegram\Callback\Pray\ListPrayCallbackHandler;
 use App\Library\Telegram\Messages\DefaultMessageHandler;
 use App\Library\Telegram\Messages\Pray\AddPrayLengthMessageHandler;
 use Illuminate\Support\ServiceProvider;
@@ -19,6 +20,7 @@ class TelegramResponseProvider extends ServiceProvider
 
         $this->app->bind(CallbackEnum::DEFAULT->value, DefaultCallbackHandler::class);
         $this->app->bind(CallbackEnum::ADD_PRAY_LENGTH->value, AddPrayLengthCallbackHandler::class);
+        $this->app->bind(CallbackEnum::LIST_PRAY->value, ListPrayCallbackHandler::class);
     }
 
     public function boot()
