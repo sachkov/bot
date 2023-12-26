@@ -3,9 +3,13 @@
 namespace App\Services\Pray;
 
 use App\Contracts\Pray\PrayServiceContract;
+use App\Library\Enum\CallbackEnum;
+use App\Library\Telegram\Keyboards\InlineKeyboardButton;
+use App\Library\Telegram\Keyboards\InlineKeyboardMarkup;
 use App\Models\Pray;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Cache;
 
 class PrayService implements PrayServiceContract
@@ -89,9 +93,9 @@ class PrayService implements PrayServiceContract
         }
 
         $next = false;
-        if ($total > 5) {
+        if ($total > $limit) {
             $next = true;
-            Cache::put($cache_key, json_encode(array_merge($seen, $showed)), 12*60*60);
+            Cache::put($cache_key, json_encode(array_merge($seen, $showed)), config('params.list.cache_ttl'));
         } else {
             Cache::forget($cache_key);
         }
@@ -101,5 +105,71 @@ class PrayService implements PrayServiceContract
             ->increment('showed');
 
         return [$text, $next];
+    }
+
+    public function getEditMessage(User $user, int $page=1): array
+    {
+        $order = config('params.edit.default_order');
+        $limit = config('params.edit.limit');
+
+        $cache_key = 'prays_edit_' . $user->id;
+
+        $seen = json_decode(Cache::get($cache_key)) ?? [];
+        $offset = ($page - 1) * $limit;
+
+        $query = Pray::query()
+            ->where('author_id', $user->id)
+            ->where('end_date', '>', Carbon::now()->subDay())
+            ->whereNotIn('id', $seen)
+            ->offset($offset)
+            ->orderBy($order);
+
+        $total = $query->count();
+
+        $prays = $query
+            ->limit($limit)
+            ->get();
+
+        $text = '';
+        $i = 1;
+        $buttons = [];
+        $showed = [];
+        $level = 0;
+        $cb_data_num = ['h' => CallbackEnum::EDIT_PRAY_SHOW->value];
+        foreach ($prays as $pray) {
+            $text .= $i . ') ' . mb_substr($pray->description, 0, 15) . '...' . PHP_EOL;
+
+            $cb_data_num['pray'] = $pray->id;
+            $buttons[$level][] = new InlineKeyboardButton($i, $cb_data_num);
+
+            if (!$level && $i > 3) {
+                $level++;
+            }
+            $showed[] = $pray->id;
+            $i++;
+        }
+        $text .= 'Выберете номер молитвы для редактирования';
+
+        $res = ['text' => $text];
+
+        $next = false;
+        if ($total > $limit) {
+            $next = true;
+            Cache::put($cache_key, json_encode(array_merge($seen, $showed)), config('params.edit.cache_ttl'));
+        } else {
+            Cache::forget($cache_key);
+        }
+
+        if ($next) {
+            $cb_data_next = [
+                'h' => CallbackEnum::EDIT_PRAY->value,
+                'page' => $page + 1
+            ];
+            $buttons[$level][] = new InlineKeyboardButton('next', $cb_data_next);
+        }
+        $keyboard = new InlineKeyboardMarkup($buttons);
+        $res['reply_markup'] = $keyboard->toJson();
+
+        return $res;
     }
 }

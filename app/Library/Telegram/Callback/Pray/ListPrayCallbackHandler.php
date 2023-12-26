@@ -17,7 +17,10 @@ class ListPrayCallbackHandler extends AbstractCallbackHandler
 
         list($text, $next) = \PrayService::list($user, $page);
 
-        $res = ['text' => $text];
+        $res = [
+            'chat_id' => $this->chat_id,
+            'text' => $text
+        ];
 
         if ($next) {
             $callback_data = [

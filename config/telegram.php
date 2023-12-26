@@ -40,6 +40,7 @@ return [
                 StartCommand::class,
                 \App\Library\Telegram\Commands\AddCommand::class,
                 \App\Library\Telegram\Commands\ListCommand::class,
+                \App\Library\Telegram\Commands\EditCommand::class,
             ],
             'secret_token' => env('TELEGRAM_SECRET_TOKEN', ''),
         ],
