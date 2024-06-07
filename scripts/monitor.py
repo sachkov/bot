@@ -10,6 +10,8 @@ load_dotenv()
 
 slack_token = os.getenv("SLACK_API_TOKEN")
 channel_id = "C06H4R8FYD7"
+basic_auth_user = "siteadmin"
+basic_auth_password = "PrivetUra"
 
 client = WebClient(token=slack_token)
 
@@ -23,7 +25,7 @@ def check_website():
     try:
         # Выполняем curl для получения содержимого страницы
         result = subprocess.run(
-            ['curl', '-s', 'https://craftedcabinetdoors.com'],
+            ['curl', '-s', '-u', f'{basic_auth_user}:{basic_auth_password}', 'https://craftedcabinetdoors.com'],
             capture_output=True,
             text=True
         )
