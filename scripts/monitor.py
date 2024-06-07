@@ -37,10 +37,7 @@ def check_website():
 
         # Проверяем наличие текста id="trending" с использованием регулярного выражения
         if not re.search(r'id\s*=\s*["\']trending["\']', page_content):
-            #send_slack_message("Website check failed: id='trending' not found.")
-            log_message("Website check failed: id='trending' not found.")
-        else:
-            log_message("Website check passed: id='trending' found.")
+            send_slack_message("Website check failed: id='trending' not found.")
     except Exception as e:
         log_message(f"Error checking website: {e}")
 
