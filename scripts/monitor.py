@@ -1,4 +1,5 @@
 import os
+import re
 import subprocess
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
@@ -28,9 +29,16 @@ def check_website():
         )
         page_content = result.stdout
 
-        # Проверяем наличие текста id="trending"
-        if 'id="trending"' not in page_content:
-            send_slack_message("Website check failed: id='trending' not found.")
+        # Логируем содержимое страницы для диагностики
+        with open('/home/bot/scripts/logs/page_content.html', 'w') as log_file:
+            log_file.write(page_content)
+
+        # Проверяем наличие текста id="trending" с использованием регулярного выражения
+        if not re.search(r'id\s*=\s*["\']trending["\']', page_content):
+            #send_slack_message("Website check failed: id='trending' not found.")
+            log_message("Website check failed: id='trending' not found.")
+        else:
+            log_message("Website check passed: id='trending' found.")
     except Exception as e:
         log_message(f"Error checking website: {e}")
 
@@ -46,4 +54,3 @@ def send_slack_message(message):
 
 # Выполняем проверку сайта
 check_website()
-
