@@ -49,10 +49,6 @@ def check_website():
         )
         page_content = result.stdout
 
-        # Логируем содержимое страницы для диагностики
-        with open('/home/bot/scripts/logs/page_content.html', 'w') as log_file:
-            log_file.write(page_content)
-
         # Проверяем наличие текста id="trending" с использованием регулярного выражения
         if re.search(r'id\s*=\s*["\']trending["\']', page_content):
             if state['status'] == 'down':
