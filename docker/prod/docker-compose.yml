@@ -34,7 +34,7 @@ services:
       - ../.././:/var/www/html
       - ../../logs/:/var/log/nginx
       - ./etc-letsencrypt:/etc/letsencrypt
-      - /home/tmai:/var/www/tmai
+      - /home/tmia:/var/www/tmai
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     networks:
       - praybot_net
